@@ -1,7 +1,10 @@
+library("sqldf")
 file <- "household_power_consumption.txt"
 
-read.table(file, head = TRUE, sep = ";", na.strings = "?") -> Epc
-Epc[grep("^[12]/2/2007", Epc$Date), ] -> x
+
+#read.table(file, head = TRUE, sep = ";", na.strings = "?") -> Epc
+#Epc[grep("^[12]/2/2007", Epc$Date), ] -> x
+read.csv2.sql(file,sql = "select * from file where Date in ('1/2/2007' , '2/2/2007')") -> Epc
 as.Date(strptime(x$Date, format = "%d/%m/%Y")) -> x$Date
 strptime(paste(x$Date, x$Time, sep = " "), format = "%Y-%m-%d %H:%M:%S") -> x$Time
 
